@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="C++ Code Standards : aims to deobfuscate and decomplexify projects written in &quot;modern&quot; c++; c0x11 has been standard for a while" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>C++ Code Standards</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/bradgearon/cpp-code-standards">View on GitHub</a>
+
+          <h1 id="project_title">C++ Code Standards</h1>
+          <h2 id="project_tagline">aims to deobfuscate and decomplexify projects written in &quot;modern&quot; c++; c0x11 has been standard for a while</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/bradgearon/cpp-code-standards/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/bradgearon/cpp-code-standards/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a name="object-lifetime" class="anchor" href="#object-lifetime"><span class="octicon octicon-link"></span></a>Object Lifetime</h2>
+
+<h4>
+<a name="use-smart-pointers" class="anchor" href="#use-smart-pointers"><span class="octicon octicon-link"></span></a>Use smart pointers</h4>
+
+<ul>
+<li>Don't manage memory, manage objects: objects manage resources</li>
+<li>Only use memory allocation when you are implementing hardware</li>
+<li>Use the most appropriate smart pointer type: unique if you will need only one reference; shared if you will share it</li>
+</ul><h4>
+<a name="dont-allocate-memory-using-global-functions" class="anchor" href="#dont-allocate-memory-using-global-functions"><span class="octicon octicon-link"></span></a>Don't allocate memory using global functions</h4>
+
+<ul>
+<li>Use new instead of alloc and dealloc</li>
+</ul><h4>
+<a name="encapsulate-resources" class="anchor" href="#encapsulate-resources"><span class="octicon octicon-link"></span></a>Encapsulate resources</h4>
+
+<ul>
+<li>Use smart pointer instance members</li>
+<li>Use initialization lists, allocate resources in constructors</li>
+<li>Release resources in destructors</li>
+</ul><h4>
+<a name="use-copy-and-move-for-smart-pointers" class="anchor" href="#use-copy-and-move-for-smart-pointers"><span class="octicon octicon-link"></span></a>Use copy and move for smart pointers</h4>
+
+<ul>
+<li>Copy when resources will be used in both the destination and the source</li>
+<li>Move when resources will be used only in the destination scope
+Additional notes on values and copy/move: <a href="http://msdn.microsoft.com/en-us/library/hh438479.aspx">http://msdn.microsoft.com/en-us/library/hh438479.aspx</a>
+</li>
+</ul><h4>
+<a name="use-stack-based-scope--lifetime-before-heap" class="anchor" href="#use-stack-based-scope--lifetime-before-heap"><span class="octicon octicon-link"></span></a>Use stack based scope / lifetime before heap</h4>
+
+<ul>
+<li>Declare variables and members at the top of the scope in which they are used</li>
+<li>Data member lifetime is virtually overhead free (no, there is no garbage collector)</li>
+<li>Maintainability and simplification (stack) valued over tiny performance gain (heap); also helps eliminate memory leaks</li>
+</ul><h4>
+<a name="copy-constructors-should-be-avoided" class="anchor" href="#copy-constructors-should-be-avoided"><span class="octicon octicon-link"></span></a>Copy constructors should be avoided</h4>
+
+<h2>
+<a name="type-definitions" class="anchor" href="#type-definitions"><span class="octicon octicon-link"></span></a>Type definitions</h2>
+
+<h4>
+<a name="dont-use-multiple-inheritance" class="anchor" href="#dont-use-multiple-inheritance"><span class="octicon octicon-link"></span></a>Don't use multiple inheritance</h4>
+
+<ul>
+<li>Confusing; rarely useful</li>
+</ul><h4>
+<a name="delegate-chain-constructors" class="anchor" href="#delegate-chain-constructors"><span class="octicon octicon-link"></span></a>Delegate "chain" constructors</h4>
+
+<h4>
+<a name="dont-hide-types-with-variable-names" class="anchor" href="#dont-hide-types-with-variable-names"><span class="octicon octicon-link"></span></a>Don't hide types with variable names</h4>
+
+<ul>
+<li>C++ allows you to replace a type name with a variable name.. Don't.</li>
+</ul><h4>
+<a name="names-of-types-variables-methods-and-data-members-should-be-meaningful" class="anchor" href="#names-of-types-variables-methods-and-data-members-should-be-meaningful"><span class="octicon octicon-link"></span></a>Names of types, variables, methods, and data members should be meaningful</h4>
+
+<ul>
+<li>Only widely used abbreviations</li>
+<li>Underscores should only appear in constants</li>
+</ul><h4>
+<a name="use-pimpl-for-dependencies-pointer-to-implementation" class="anchor" href="#use-pimpl-for-dependencies-pointer-to-implementation"><span class="octicon octicon-link"></span></a>Use pimpl for dependencies (pointer to implementation)</h4>
+
+<ul>
+<li><a href="http://msdn.microsoft.com/en-us/library/vstudio/hh438477(v=vs.110).aspx">http://msdn.microsoft.com/en-us/library/vstudio/hh438477(v=vs.110).aspx</a></li>
+</ul><h4>
+<a name="namespace-your-things" class="anchor" href="#namespace-your-things"><span class="octicon octicon-link"></span></a>Namespace your things</h4>
+
+<ul>
+<li>Don't mess with global namespace... no one else does, why should you</li>
+</ul><h4>
+<a name="method-declaration-should-not-be-included-in-class-definitions" class="anchor" href="#method-declaration-should-not-be-included-in-class-definitions"><span class="octicon octicon-link"></span></a>Method declaration should not be included in class definitions</h4>
+
+<h4>
+<a name="use-strongly-typed-enums" class="anchor" href="#use-strongly-typed-enums"><span class="octicon octicon-link"></span></a>Use strongly-typed enums</h4>
+
+<ul>
+<li>enum class vs enum; eliminates potential collisions</li>
+</ul><h2>
+<a name="containers" class="anchor" href="#containers"><span class="octicon octicon-link"></span></a>Containers</h2>
+
+<h4>
+<a name="use-range-based-for-statement" class="anchor" href="#use-range-based-for-statement"><span class="octicon octicon-link"></span></a>Use range-based for statement</h4>
+
+<ul>
+<li>Use std::begin and std::end for types that don't already have these</li>
+<li>Iterator should be marked as constant, especially (and you really shouldn't do this) if you are not replacing a reference in your loop</li>
+</ul><h4>
+<a name="use-appropriate-std-containers" class="anchor" href="#use-appropriate-std-containers"><span class="octicon octicon-link"></span></a>Use appropriate std containers</h4>
+
+<ul>
+<li>For example: array for fixed size collection; vector, list, map, etc for dynamic</li>
+<li>Use list for quick insert / removal</li>
+<li>Use vector if you need random access</li>
+<li>Use map for lookups</li>
+<li>Don't be afraid to use smart pointer types as element type</li>
+</ul><h4>
+<a name="use-map-for-associative-collections" class="anchor" href="#use-map-for-associative-collections"><span class="octicon octicon-link"></span></a>Use map for associative collections</h4>
+
+<ul>
+<li>Do not use pointers or complex types for keys</li>
+<li>Use make_pair for constructing pairs</li>
+</ul><h2>
+<a name="algorithms--logic" class="anchor" href="#algorithms--logic"><span class="octicon octicon-link"></span></a>Algorithms / Logic</h2>
+
+<h4>
+<a name="use-std-algorithms-library" class="anchor" href="#use-std-algorithms-library"><span class="octicon octicon-link"></span></a>Use std algorithms library</h4>
+
+<ul>
+<li>When a standard algorithm implementation exists for given logic, it should be used instead of writing said logic</li>
+</ul><h2>
+<a name="data-members-and-variables" class="anchor" href="#data-members-and-variables"><span class="octicon octicon-link"></span></a>Data Members and variables</h2>
+
+<h4>
+<a name="use-auto-for-locally-scoped-variables" class="anchor" href="#use-auto-for-locally-scoped-variables"><span class="octicon octicon-link"></span></a>Use auto for locally scoped variables</h4>
+
+<ul>
+<li>Reduces redundancy and increases readability</li>
+</ul><h4>
+<a name="use-complex-argument-types-over-argument-lists" class="anchor" href="#use-complex-argument-types-over-argument-lists"><span class="octicon octicon-link"></span></a>Use complex argument types over argument lists</h4>
+
+<h4>
+<a name="use-nullptr" class="anchor" href="#use-nullptr"><span class="octicon octicon-link"></span></a>Use nullptr</h4>
+
+<ul>
+<li>Don't initialize things to 0</li>
+</ul><h2>
+<a name="threading" class="anchor" href="#threading"><span class="octicon octicon-link"></span></a>Threading</h2>
+
+<h4>
+<a name="minimize-use-of-operating-system-objects" class="anchor" href="#minimize-use-of-operating-system-objects"><span class="octicon octicon-link"></span></a>Minimize use of operating system objects</h4>
+
+<ul>
+<li>Use atomic types and flags over mutex; use std:mutex over platform specific</li>
+</ul><h4>
+<a name="use-threading-efficiently" class="anchor" href="#use-threading-efficiently"><span class="octicon octicon-link"></span></a>Use threading efficiently</h4>
+
+<ul>
+<li>Spawn threads only when they will / can be used: default thread implementation does not consider resources</li>
+</ul><h4>
+<a name="do-not-use-volatile-keyword-for-non-atomic-access-to-variables" class="anchor" href="#do-not-use-volatile-keyword-for-non-atomic-access-to-variables"><span class="octicon octicon-link"></span></a>Do not use volatile keyword for non-atomic access to variables</h4>
+
+<ul>
+<li>Operations on volatile variables are not atomic and do not define behavior useful for threading</li>
+<li>Use atomic types and mutex</li>
+</ul><h2>
+<a name="assertions-and-exceptions" class="anchor" href="#assertions-and-exceptions"><span class="octicon octicon-link"></span></a>Assertions and Exceptions</h2>
+
+<h4>
+<a name="use-type-traits" class="anchor" href="#use-type-traits"><span class="octicon octicon-link"></span></a>Use type traits</h4>
+
+<ul>
+<li>Compile time type queries</li>
+<li>Static assertions</li>
+</ul><h4>
+<a name="throw-and-handle-exceptions-for-error-condition" class="anchor" href="#throw-and-handle-exceptions-for-error-condition"><span class="octicon octicon-link"></span></a>Throw and handle exceptions for error condition</h4>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">C++ Code Standards maintained by <a href="https://github.com/bradgearon">bradgearon</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
